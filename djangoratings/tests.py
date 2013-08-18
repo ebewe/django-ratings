@@ -1,3 +1,4 @@
+# -*-coding:UTF-8 -*
 import unittest
 import random
 
@@ -9,15 +10,17 @@ from django.conf import settings
 from exceptions import *
 from models import Vote, SimilarUser, IgnoredObject
 from fields import AnonymousRatingField, RatingField
+from django.utils.encoding import python_2_unicode_compatible
 
 settings.RATINGS_VOTES_PER_IP = 1
 
+@python_2_unicode_compatible
 class RatingTestModel(models.Model):
     rating = AnonymousRatingField(range=2, can_change_vote=True)
     rating2 = RatingField(range=2, can_change_vote=False)
     
-    def __unicode__(self):
-        return unicode(self.pk)
+    def __str__(self):
+        return self.pk
 
 class RatingTestCase(unittest.TestCase):
     def testRatings(self):

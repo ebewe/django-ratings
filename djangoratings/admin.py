@@ -1,5 +1,6 @@
+# -*-coding:UTF-8 -*
 from django.contrib import admin
-from models import Vote, Score
+from djangoratings.models import Vote, Score
 
 class VoteAdmin(admin.ModelAdmin):
     list_display = ('content_object', 'user', 'ip_address', 'cookie', 'score', 'date_changed')

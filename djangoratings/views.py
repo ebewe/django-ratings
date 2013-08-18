@@ -1,10 +1,11 @@
+# -*-coding:UTF-8 -*
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, Http404
 
-from exceptions import *
+from djangoratings.exceptions import *
 from django.conf import settings
-from default_settings import RATINGS_VOTES_PER_IP
+from djangoratings.default_settings import RATINGS_VOTES_PER_IP
 
 class AddRatingView(object):
     def __call__(self, request, content_type_id, object_id, field_name, score):
@@ -82,27 +83,32 @@ class AddRatingView(object):
 
     def authentication_required_response(self, request, context):
         response = HttpResponse('You must be logged in to vote.')
-        response.status_code = 403
+        if not request.is_ajax():
+            response.status_code = 403
         return response
     
     def cannot_change_vote_response(self, request, context):
         response = HttpResponse('You have already voted.')
-        response.status_code = 403
+        if not request.is_ajax():
+            response.status_code = 403
         return response
     
     def cannot_delete_vote_response(self, request, context):
         response = HttpResponse('You can\'t delete this vote.')
-        response.status_code = 403
+        if not request.is_ajax():
+            response.status_code = 403
         return response
     
     def invalid_field_response(self, request, context):
         response = HttpResponse('Invalid field name.')
-        response.status_code = 403
+        if not request.is_ajax():
+            response.status_code = 403
         return response
     
     def invalid_rating_response(self, request, context):
         response = HttpResponse('Invalid rating value.')
-        response.status_code = 403
+        if not request.is_ajax():
+            response.status_code = 403
         return response
         
     def get_instance(self, content_type_id, object_id):

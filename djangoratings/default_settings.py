@@ -1,3 +1,4 @@
+# -*-coding:UTF-8 -*
 from django.conf import settings
 
 # Used to limit the number of unique IPs that can vote on a single object+field.
